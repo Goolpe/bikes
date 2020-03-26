@@ -1,20 +1,14 @@
 import 'package:bikes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SvgPicture.asset(
-          'assets/logo.svg',
-        ),
-        centerTitle: true,
-      ),
+    return BikesScaffold(
+      backgroundColor: Color(0xffF0F1F5),
       body: Stack(
         children: <Widget>[
           Consumer<BikesProvider>(
@@ -55,7 +49,7 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () => 
                 Navigator.push<Widget>(context, CupertinoPageRoute(
-                  builder: (context) => AddBikeScreen()
+                  builder: (context) => EditBikeScreen()
                 )
               ),
             ),

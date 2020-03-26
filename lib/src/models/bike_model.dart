@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class Bike{
   int id;
   String frameSize;

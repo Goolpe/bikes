@@ -10,7 +10,8 @@ class BikesTextField extends StatelessWidget{
     this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
     this.controller,
-    this.onSaved
+    this.onSaved,
+    this.initialValue = ''
   });
 
   final String label;
@@ -21,6 +22,7 @@ class BikesTextField extends StatelessWidget{
   final void Function() onFieldSubmitted;
   final TextEditingController controller;
   final Function(String) onSaved;
+  final String initialValue;
 
   @override
   Widget build(BuildContext context){
@@ -28,6 +30,7 @@ class BikesTextField extends StatelessWidget{
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        initialValue: initialValue,
         controller: controller,
         decoration: InputDecoration(
           labelText: label,

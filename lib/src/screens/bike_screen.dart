@@ -1,6 +1,6 @@
 import 'package:bikes/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class BikeScreen extends StatefulWidget {
@@ -27,14 +27,7 @@ class _BikeScreenState extends State<BikeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SvgPicture.asset(
-          'assets/logo.svg',
-        ),
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.white,
+    return BikesScaffold(
       body: Consumer<BikesProvider>(
         builder: (BuildContext context, BikesProvider state, _){
           if(state.fetchingBike || state.bike == null){
@@ -60,10 +53,28 @@ class _BikeScreenState extends State<BikeScreen> {
                         ),
                       )
                     ),
-                    InkWell(
-                      child: Icon(Icons.more_vert),
-                      onTap: (){},
-                    )
+                    PopupMenuButton<String>(
+                      padding: EdgeInsets.all(0),
+                      onSelected: (String value){
+                          if(value == 'Delete'){
+                            Provider.of<BikesProvider>(context, listen: false).removeBike(widget.id);
+                            Navigator.pop(context);
+                          } else if(value == 'Edit'){
+                            Navigator.push<Widget>(
+                              context, CupertinoPageRoute(
+                              builder: (context) => EditBikeScreen()
+                            ));
+                          }
+                      },
+                      itemBuilder: (BuildContext context) {
+                        return <String>['Delete', 'Edit'].map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    ),
                   ]
                 ),
               ),

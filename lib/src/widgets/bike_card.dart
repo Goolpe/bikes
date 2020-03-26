@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class BikeCard extends StatelessWidget {
   BikeCard({
@@ -52,10 +53,27 @@ class BikeCard extends StatelessWidget {
                           ),
                         )
                       ),
-                      InkWell(
-                        child: Icon(Icons.more_vert),
-                        onTap: (){},
-                      )
+                      PopupMenuButton<String>(
+                        padding: EdgeInsets.all(0),
+                        onSelected: (String value){
+                            if(value == 'Delete'){
+                              Provider.of<BikesProvider>(context, listen: false).removeBike(data.id);
+                            } else if(value == 'Edit'){
+                              Navigator.push<Widget>(
+                                context, CupertinoPageRoute(
+                                builder: (context) => EditBikeScreen(id: data.id)
+                              ));
+                            }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return <String>['Delete', 'Edit'].map((String choice) {
+                            return PopupMenuItem<String>(
+                              value: choice,
+                              child: Text(choice),
+                            );
+                          }).toList();
+                        },
+                      ),
                     ]
                   ),
                   Padding(

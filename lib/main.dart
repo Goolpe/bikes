@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'Bikes',
         theme: ThemeData(
           primaryColor: Color(0xff00E1AA),
-          scaffoldBackgroundColor: Color(0xffF0F1F5),
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
             elevation: 0,
             iconTheme: IconThemeData(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bikes/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
 class BikesProvider extends ChangeNotifier{
@@ -41,15 +42,29 @@ class BikesProvider extends ChangeNotifier{
     _fetchingBike = true;
     notifyListeners();
 
-    _bike = _bikes.firstWhere(
-      (Bike _dataBikesMap) => _dataBikesMap.id == id);
+    if(id == null){
+      _bike = Bike();
+    } else{
+      _bike = _bikes.firstWhere(
+        (Bike _dataBikesMap) => _dataBikesMap.id == id);
+    }
 
     _fetchingBike = false;
     notifyListeners();
   }
 
-  void addBike(Bike data){
-    data.id = DateTime.now().millisecondsSinceEpoch;
+  void editBike(Bike data, int id){
+    if(id != null){
+      _bikes.removeWhere((Bike bike) => id == bike.id);
+    } else{
+      data.id = DateTime.now().millisecondsSinceEpoch;
+    }
     _bikes.add(data);
+    notifyListeners();
+  }
+
+  void removeBike(int id){
+    _bikes.removeWhere((Bike bike) => id == bike.id);
+    notifyListeners();
   }
 }
