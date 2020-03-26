@@ -1,6 +1,6 @@
 import 'package:bikes/shelf.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,23 +9,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('IS-Bikes'),
+        title: SvgPicture.asset(
+          'assets/logo.svg',
+        ),
         centerTitle: true,
       ),
-      body: Consumer<Bikes>(
-        builder: (BuildContext context, Bikes state, _){
+      body: Consumer<BikesNotifier>(
+        builder: (BuildContext context, BikesNotifier state, _){
           return ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 4),
             itemCount: state.data.length,
             itemBuilder: (BuildContext context, int i){
-              return Card(
-                child: Column(
-                  children: <Widget>[
-                    CachedNetworkImage(
-                      imageUrl: state.data[i].photoUrl,
-                    )
-                  ],
-                ),
-              );
+              return BikeCard(data: state.data[i]);
             }
           );
         }

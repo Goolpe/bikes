@@ -1,2 +1,2 @@
 export 'bike.dart';
-export 'bikes.dart';
+export 'bikes_notifier.dart';

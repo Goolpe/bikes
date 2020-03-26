@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:bikes/shelf.dart';
 import 'package:flutter/widgets.dart';
 
-class Bikes extends ChangeNotifier{
-  Bikes({
+class BikesNotifier extends ChangeNotifier{
+  BikesNotifier({
     @required this.context
   }) : assert(context != null);
 
