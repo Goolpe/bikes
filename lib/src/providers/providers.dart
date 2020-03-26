@@ -1,0 +1,1 @@
+export 'bikes_provider.dart';

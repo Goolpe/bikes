@@ -1,3 +1,1 @@
-export 'bike.dart';
-export 'bike_notifier.dart';
-export 'bikes_notifier.dart';
+export 'bike_model.dart';

@@ -1,4 +1,4 @@
-import 'package:bikes/shelf.dart';
+import 'package:bikes/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BikesNotifier>(
-          create: (_) => BikesNotifier(context: context)..init()
-        ),
-        ChangeNotifierProvider<BikeNotifier>(
-          create: (_) => BikeNotifier(),
-        ),
-        ProxyProvider<BikesNotifier, BikeNotifier>(
-          update: (context, BikesNotifier state, _) => BikeNotifier(bikes: state.data),
+        ChangeNotifierProvider<BikesProvider>(
+          create: (_) => BikesProvider(context: context)..init()
         ),
       ],
       child: MaterialApp(
@@ -28,7 +22,9 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xffF0F1F5),
           appBarTheme: AppBarTheme(
             elevation: 0,
-            // color: Color(0xff00E1AA),
+            iconTheme: IconThemeData(
+              color: Colors.white
+            ),
             textTheme: TextTheme(
               title: TextStyle(
                 color: Colors.black

@@ -1,5 +1,4 @@
-import 'package:bikes/shelf.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bikes/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,8 @@ class _BikeScreenState extends State<BikeScreen> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-      Provider.of<BikeNotifier>(context, listen: false).init(id: widget.id)
+      Provider.of<BikesProvider>(context, listen: false)
+        .fetchBike(widget.id)
     );
   }
 
@@ -35,9 +35,9 @@ class _BikeScreenState extends State<BikeScreen> {
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
-      body: Consumer<BikeNotifier>(
-        builder: (BuildContext context, BikeNotifier state, _){
-          if(state.loading || state.data == null){
+      body: Consumer<BikesProvider>(
+        builder: (BuildContext context, BikesProvider state, _){
+          if(state.fetchingBike || state.bike == null){
             return SizedBox();
           }
           return ListView(
@@ -49,7 +49,7 @@ class _BikeScreenState extends State<BikeScreen> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child: Text(state.data.name.toUpperCase(), 
+                        child: Text(state.bike.name.toUpperCase(), 
                           style: TextStyle(
                             fontFamily: 'IBMPlexSans-Bold',
                             color: Color(0xff1C2740), 
@@ -72,7 +72,7 @@ class _BikeScreenState extends State<BikeScreen> {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: BikesBadge(label: state.data.category)
+                      child: BikesBadge(label: state.bike.category)
                     ),
                     SizedBox(width: 16),
                     Expanded(
@@ -80,7 +80,7 @@ class _BikeScreenState extends State<BikeScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Expanded(
-                            child: Text(state.data.location,
+                            child: Text(state.bike.location,
                               textAlign: TextAlign.end,
                               overflow: TextOverflow.ellipsis, 
                               style: TextStyle(color: Color(0xff0F1E2D)
@@ -96,20 +96,11 @@ class _BikeScreenState extends State<BikeScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
-                child: true ? Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffF0F1F5))
-                  ),
-                  child: Container(
-                    margin: EdgeInsets.all(16),
-                    child: SvgPicture.asset(
-                      'assets/no_photo.svg',
-                    )
-                  )
+                child: BikesImage(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width,
+                  photoUrl: state.bike.photoUrl
                 )
-                : CachedNetworkImage(
-                  imageUrl: state.data.photoUrl,
-                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 4),
@@ -123,7 +114,7 @@ class _BikeScreenState extends State<BikeScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 4),
-                child: Text(state.data.description, 
+                child: Text(state.bike.description, 
                   style: TextStyle(fontSize: 16)
                 )
               )

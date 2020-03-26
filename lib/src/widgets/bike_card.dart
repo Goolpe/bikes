@@ -1,4 +1,4 @@
-import 'package:bikes/shelf.dart';
+import 'package:bikes/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,35 +24,11 @@ class BikeCard extends StatelessWidget {
       child: InkWell(
         onTap: () => data.id == null
         ? null
-        : Navigator.push(context, CupertinoPageRoute(builder: (context) => BikeScreen(id: data.id))),
+        : Navigator.push<Widget>(context, CupertinoPageRoute(builder: (context) => BikeScreen(id: data.id))),
         child: Row(
           children: <Widget>[
-            Container(
-              height: 100,
-              width: 100,
-              margin: EdgeInsets.only(right: 8),
-              child: data.photoUrl != null || data.photoUrl.isEmpty
-              ? Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffF0F1F5))
-                ),
-                child: Container(
-                  margin: EdgeInsets.all(16),
-                  child: SvgPicture.asset(
-                    'assets/no_photo.svg',
-                  )
-                )
-              )
-              : Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                      data.photoUrl,
-                    ),
-                    fit: BoxFit.contain
-                  )
-                ),
-              )
+            BikesImage(
+              photoUrl: data.photoUrl
             ),
             Flexible(
               child: Column(
