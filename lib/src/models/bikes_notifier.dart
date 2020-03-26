@@ -13,22 +13,24 @@ class BikesNotifier extends ChangeNotifier{
   List<Bike> _data = [];
   List<Bike> get data => _data;
 
+  Bike _bike;
+  Bike get bike => _bike;
+
   bool _loading = false;
   bool get loading => _loading;
 
-  void fethData() async{
+  void init() async{
     _loading = true;
     notifyListeners();
 
     String _dataBikes = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
     List<dynamic> _dataBikesList = json.decode(_dataBikes);
 
-    _data.clear();
     _dataBikesList.forEach((dynamic _dataBikesMap){
       _data.add(Bike.fromJson(_dataBikesMap));
     });
 
-    _loading = true;
+    _loading = false;
     notifyListeners();
   }
 }

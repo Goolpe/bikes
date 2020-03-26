@@ -15,7 +15,13 @@ class BikesBadge extends StatelessWidget {
         border: Border.all(color: Color(0xff00E1AA))
       ),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Text(label, style: TextStyle(color: Color(0xff00E1AA), fontSize: 12)),
+      child: Text(label, 
+        overflow: TextOverflow.ellipsis, 
+        style: TextStyle(
+          color: Color(0xff00E1AA), 
+          fontSize: 12
+        )
+      ),
     );
   }
 }

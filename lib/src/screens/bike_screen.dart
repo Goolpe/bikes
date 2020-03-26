@@ -4,7 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class BikeScreen extends StatelessWidget {
+class BikeScreen extends StatefulWidget {
+  BikeScreen({
+    @required this.id
+  }) : assert(id != null);
+
+  final int id;
+
+  @override
+  _BikeScreenState createState() => _BikeScreenState();
+}
+
+class _BikeScreenState extends State<BikeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+      Provider.of<BikeNotifier>(context, listen: false).init(id: widget.id)
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +35,11 @@ class BikeScreen extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
-      body: Consumer<BikesNotifier>(
-        builder: (BuildContext context, BikesNotifier state, _){
+      body: Consumer<BikeNotifier>(
+        builder: (BuildContext context, BikeNotifier state, _){
+          if(state.loading || state.data == null){
+            return SizedBox();
+          }
           return ListView(
             padding: EdgeInsets.all(16),
             children: <Widget>[
@@ -27,7 +49,7 @@ class BikeScreen extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child: Text(state.data[0].name.toUpperCase(), 
+                        child: Text(state.data.name.toUpperCase(), 
                           style: TextStyle(
                             fontFamily: 'IBMPlexSans-Bold',
                             color: Color(0xff1C2740), 
@@ -48,22 +70,45 @@ class BikeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    BikesBadge(label: state.data[0].category),
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.place, color: Color(0xff0F1E2D)),
-                        Text(state.data[0].location, style: TextStyle(color: Color(0xff0F1E2D)))
-                      ]
+                    Expanded(
+                      child: BikesBadge(label: state.data.category)
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(state.data.location,
+                              textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis, 
+                              style: TextStyle(color: Color(0xff0F1E2D)
+                              )
+                            )
+                          ),
+                          Icon(Icons.place, color: Color(0xff0F1E2D)),
+                        ]
+                      )
                     )
-                  ],
-                )
+                  ]
+                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
-                child: CachedNetworkImage(
-                  imageUrl: state.data[0].photoUrl,
+                child: true ? Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xffF0F1F5))
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.all(16),
+                    child: SvgPicture.asset(
+                      'assets/no_photo.svg',
+                    )
+                  )
+                )
+                : CachedNetworkImage(
+                  imageUrl: state.data.photoUrl,
                 ),
               ),
               Padding(
@@ -78,7 +123,7 @@ class BikeScreen extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 4),
-                child: Text(state.data[0].description, 
+                child: Text(state.data.description, 
                   style: TextStyle(fontSize: 16)
                 )
               )
