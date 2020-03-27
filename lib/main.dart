@@ -1,6 +1,8 @@
 import 'package:bikes/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
         body2: TextStyle(color: COLOR_PRIMARY_TEXT, fontFamily: FONT_IBM),
       ),
       appBarTheme: AppBarTheme(
+        brightness: Brightness.dark,
         elevation: 0,
         iconTheme: IconThemeData(
           color: Colors.white

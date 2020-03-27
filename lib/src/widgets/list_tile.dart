@@ -18,22 +18,29 @@ class BikesListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Text(title.toUpperCase(), 
-                style: Theme.of(context).textTheme.body2.copyWith(
-                  fontWeight: FontWeight.bold, 
-                  fontSize: fontSize,
-                  letterSpacing: 1.2,
-                )
-              ),
-            )
+    return Stack(
+      children: <Widget>[
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: 24
           ),
-          PopupMenuButton<String>(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(right: 20),
+            child: Text(title.toUpperCase(), 
+              style: Theme.of(context).textTheme.body2.copyWith(
+                fontWeight: FontWeight.bold, 
+                fontSize: fontSize,
+                letterSpacing: 1.2,
+              )
+            ),
+          )
+        ),
+        Positioned(
+          top: -8,
+          right: -16,
+          child: PopupMenuButton<String>(
+            padding: EdgeInsets.all(0),
             onSelected: (String value){
             if(value == 'Delete'){
               Provider.of<BikesProvider>(context, listen: false).removeBike(id);
@@ -54,8 +61,8 @@ class BikesListTile extends StatelessWidget {
               }).toList();
             },
           ),
-        ]
-      ),
+        )
+      ]
     );
   }
 }

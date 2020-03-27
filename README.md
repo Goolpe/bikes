@@ -1,16 +1,29 @@
-# bikes
+# Flutter Project Bikes (tested on android)
 
-A new Flutter project.
+### Features: 
+1. Fetch data from json file;
+2. Delete data;
+3. Edit data;
+4. Add data.
 
-## Getting Started
+### How to begin
 
-This project is a starting point for a Flutter application.
+1. ```git clone https://github.com/Goolpe/bikes.git```
+2. ```cd ./bikes```
+2. ```flutter pub get```
 
-A few resources to get you started if this is your first Flutter project:
+### Debug
+```flutter run```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Build
+https://flutter.dev/docs/deployment/android
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots
+
+1. ListView with items that contain: Bike Photo, Name, Category, Frame Size and Location
+2. Detail page with all available information for each item
+3. Edit page where you can edit or add new items
+
+<img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/0.png" width="200" /> |
+<img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/1.png" width="200" /> |
+<img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/2.png" width="200" /> |

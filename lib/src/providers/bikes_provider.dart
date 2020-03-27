@@ -44,10 +44,10 @@ class BikesProvider extends ChangeNotifier{
       (Bike value) => value.id == id);
   }
 
-  void addBike(Bike data){
+  void addBike(Bike newData){
     //create and add to list new id
-    data.id = DateTime.now().millisecondsSinceEpoch;
-    _dataList.add(data);
+    newData.id = DateTime.now().millisecondsSinceEpoch;
+    _dataList.add(newData);
     notifyListeners();
   }
 

@@ -47,7 +47,7 @@ class BikesTextField extends StatelessWidget{
         focusNode: focusNode,
         maxLength: maxLength,
         validator: (String value) {
-          if (value.isEmpty) {
+          if (value.trim().isEmpty) {
             return 'Enter $label';
           }
           return null;

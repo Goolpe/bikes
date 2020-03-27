@@ -27,10 +27,22 @@ class BikesScreen extends StatelessWidget {
           );
         }
         return ListView.builder(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.only(top: 4, bottom: 70),
           itemCount: state.dataList.length,
           itemBuilder: (BuildContext context, int i){
-            return BikeCard(data: state.dataList[i]);
+            return BikesCard(
+              data: state.dataList[i],
+              onTap: (){
+                if(state.dataList[i].id != null){
+                  Navigator.push<Widget>(
+                    context, CupertinoPageRoute(
+                      builder: (context) => BikeScreen(id: state.dataList[i].id)
+                    )
+                  );
+                }
+              },
+            );
           }
         );
       }
