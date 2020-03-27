@@ -55,9 +55,12 @@ class BikesProvider extends ChangeNotifier{
 
   void editBike(Bike newData, int id){
     // find and replace data by id
-    _dataList.asMap().forEach((int i, Bike value){
-      if(value.id == id) _dataList[i] = newData;
-    });
+    for(int i = 0; i < _dataList.length; i++){
+      if(_dataList[i].id == id){
+         _dataList[i] = newData;
+         break;
+      }
+    }
     notifyListeners();
   }
 
