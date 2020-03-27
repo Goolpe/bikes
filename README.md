@@ -24,5 +24,5 @@
 3. Edit page where you can edit or add new items
 
 <img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/0.png" width="200" /> |
-<img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/1.png" width="200" /> |
 <img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/2.png" width="200" /> |
+<img src="https://raw.githubusercontent.com/Goolpe/bikes/master/assets/1.png" width="200" /> |
