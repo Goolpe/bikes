@@ -41,6 +41,7 @@ class _BikeScreenState extends State<BikeScreen> {
               BikesCard(
                 data: state.data,
                 type: BikesCardType.vertical,
+                onDelete: () => Navigator.pop(context),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),

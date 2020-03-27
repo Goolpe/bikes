@@ -11,12 +11,14 @@ class BikesCard extends StatelessWidget {
   BikesCard({
     @required this.data,
     this.type = BikesCardType.horizontal,
-    this.onTap
+    this.onTap,
+    this.onDelete,
   }) : assert(data != null);
 
   final Bike data;
   final BikesCardType type;
   final void Function() onTap;
+  final void Function() onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +49,14 @@ class BikesCard extends StatelessWidget {
       return Column(
         children: <Widget>[
           _widget(fontSize: 24, showPrice: true),
-          BikesImage(
-            width: MediaQuery.of(context).size.width,
-            height: 300,
-            photoUrl: data.photoUrl,
-          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: BikesImage(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              photoUrl: data.photoUrl,
+            ),
+          )
         ]
       );
     }
@@ -68,6 +73,7 @@ class BikesCard extends StatelessWidget {
           title: data.name ?? '',
           id: data.id,
           fontSize: fontSize,
+          onDelete: onDelete
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8),

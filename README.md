@@ -7,7 +7,6 @@
 4. Add data.
 
 ### How to begin
-
 1. ```git clone https://github.com/Goolpe/bikes.git```
 2. ```cd ./bikes```
 2. ```flutter pub get```
@@ -16,10 +15,10 @@
 ```flutter run```
 
 ### Build
-https://flutter.dev/docs/deployment/android
+- build yourself - https://flutter.dev/docs/deployment/android
+- or try apk - https://github.com/Goolpe/bikes/tree/master/assets/apk
 
 ### Screenshots
-
 1. ListView with items that contain: Bike Photo, Name, Category, Frame Size and Location
 2. Detail page with all available information for each item
 3. Edit page where you can edit or add new items

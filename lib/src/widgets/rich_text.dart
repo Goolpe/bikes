@@ -14,7 +14,7 @@ class BikesRichText extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: RichText(
-        overflow: TextOverflow.ellipsis, 
+        overflow: TextOverflow.ellipsis,
         text: TextSpan(
         style: TextStyle(
           fontSize: 14.0,

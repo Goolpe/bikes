@@ -25,13 +25,15 @@ class BikesProvider extends ChangeNotifier{
     notifyListeners();
 
     //fetch and decode json file
-    String _dataJson = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
-    List<dynamic> _newDataList = json.decode(_dataJson) as List<dynamic>;
+    try{
+      String _dataJson = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
+      List<dynamic> _newDataList = json.decode(_dataJson) as List<dynamic>;
 
-    //transfer json to bike model
-    _newDataList.forEach((dynamic _dataListMap){
-      _dataList.add(Bike.fromJson(_dataListMap));
-    });
+      //transfer json to bike model
+      _newDataList.forEach((dynamic _dataListMap){
+        _dataList.add(Bike.fromJson(_dataListMap));
+      });
+    } catch(_){}
 
     //finish loading of data fetching
     _fetchingDataList = false;
