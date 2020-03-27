@@ -11,60 +11,57 @@ class BikesProvider extends ChangeNotifier{
 
   final BuildContext context;
 
-  List<Bike> _bikes = [];
-  List<Bike> get bikes => _bikes;
+  List<Bike> _dataList = [];
+  List<Bike> get dataList => _dataList;
 
-  Bike _bike;
-  Bike get bike => _bike;
+  bool _fetchingDataList = false;
+  bool get fetchingDataList => _fetchingDataList;
 
-  bool _fetchingBikes = false;
-  bool get fetchingBikes => _fetchingBikes;
-
-  bool _fetchingBike = false;
-  bool get fetchingBike => _fetchingBike;
-
+  //initialization of bikes provider
   void init() async{
-    _fetchingBikes = true;
+
+    //start loading of data fetching
+    _fetchingDataList = true;
     notifyListeners();
 
-    String _dataBikes = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
-    List<dynamic> _dataBikesList = json.decode(_dataBikes);
+    //fetch and decode json file
+    String _dataJson = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
+    List<dynamic> _newDataList = json.decode(_dataJson) as List<dynamic>;
 
-    _dataBikesList.forEach((dynamic _dataBikesMap){
-      _bikes.add(Bike.fromJson(_dataBikesMap));
+    //transfer json to bike model
+    _newDataList.forEach((dynamic _dataListMap){
+      _dataList.add(Bike.fromJson(_dataListMap));
     });
 
-    _fetchingBikes = false;
+    //finish loading of data fetching
+    _fetchingDataList = false;
     notifyListeners();
   }
 
-  void fetchBike(int id){
-    _fetchingBike = true;
-    notifyListeners();
+  Bike fetchBike(int id){
+    //find and return data by id
+    return _dataList.firstWhere(
+      (Bike value) => value.id == id);
+  }
 
-    if(id == null){
-      _bike = Bike();
-    } else{
-      _bike = _bikes.firstWhere(
-        (Bike _dataBikesMap) => _dataBikesMap.id == id);
-    }
-
-    _fetchingBike = false;
+  void addBike(Bike data){
+    //create and add to list new id
+    data.id = DateTime.now().millisecondsSinceEpoch;
+    _dataList.add(data);
     notifyListeners();
   }
 
-  void editBike(Bike data, int id){
-    if(id != null){
-      _bikes.removeWhere((Bike bike) => id == bike.id);
-    } else{
-      data.id = DateTime.now().millisecondsSinceEpoch;
-    }
-    _bikes.add(data);
+  void editBike(Bike newData, int id){
+    // find and replace data by id
+    _dataList.asMap().forEach((int i, Bike value){
+      if(value.id == id) _dataList[i] = newData;
+    });
     notifyListeners();
   }
 
   void removeBike(int id){
-    _bikes.removeWhere((Bike bike) => id == bike.id);
+    // find and remove data by id
+    _dataList.removeWhere((Bike bike) => id == bike.id);
     notifyListeners();
   }
 }

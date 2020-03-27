@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 
 class BikesTextField extends StatelessWidget{
   const BikesTextField({
-    @required this.label,
+    this.label = '',
+    this.maxLength = 30,
+    this.initialValue = '',
+    this.textInputAction = TextInputAction.next,
+    this.maxLines = 1,
     this.focusNode,
     this.nextFocusNode,
-    this.maxLength = 30,
-    this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
-    this.controller,
     this.onSaved,
-    this.initialValue = ''
+    this.keyboardType = TextInputType.text,
   });
 
   final String label;
@@ -20,22 +21,24 @@ class BikesTextField extends StatelessWidget{
   final FocusNode nextFocusNode;
   final TextInputAction textInputAction;
   final void Function() onFieldSubmitted;
-  final TextEditingController controller;
   final Function(String) onSaved;
   final String initialValue;
+  final int maxLines;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context){
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
         initialValue: initialValue,
-        controller: controller,
         decoration: InputDecoration(
           labelText: label,
           counterText: '',
         ),
+        keyboardType: keyboardType,
+        maxLines: maxLines,
         textCapitalization: TextCapitalization.sentences,
         onFieldSubmitted: (_) => onFieldSubmitted == null
          ? FocusScope.of(context).nextFocus()

@@ -16,15 +16,13 @@ class EditBikeScreen extends StatefulWidget {
 class _EditBikeScreenState extends State<EditBikeScreen> {
   
   final _formKey = GlobalKey<FormState>();
-
-  String _frameSize = 'S';
   
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
-      Provider.of<BikesProvider>(context, listen: false)
-        .fetchBike(widget.id)
+      Provider.of<BikeProvider>(context, listen: false)
+        .fetchBike(context, widget.id)
     );
   }
 
@@ -33,9 +31,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: BikesScaffold(
-        body: Consumer<BikesProvider>(
-          builder: (context, BikesProvider state, _){
-            if(state.fetchingBike || state.bike == null || state.bike.id != widget.id){
+        body: Consumer<BikeProvider>(
+          builder: (context, BikeProvider state, _){
+            if(state.fetchingData 
+              || state.data == null 
+              || state.data.id != widget.id
+            ){
               return SizedBox();
             }
             return Form(
@@ -45,44 +46,32 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                 children: <Widget>[
                   BikesTextField(
                     label: 'photo',
-                    initialValue: state.bike.photoUrl,
-                    onSaved: (String value) => state.bike.photoUrl = value,
+                    maxLength: 150,
+                    initialValue: state.data.photoUrl,
+                    onSaved: (String value) => state.data.photoUrl = value,
                   ),
                   BikesTextField(
                     label: 'name',
-                    initialValue: state.bike.name,
-                    onSaved: (String value) => state.bike.name = value,
+                    maxLength: 100,
+                    initialValue: state.data.name,
+                    onSaved: (String value) => state.data.name = value,
                   ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: BikesTextField(
-                          initialValue: state.bike.category,
+                          initialValue: state.data.category,
                           label: 'category',
-                          onSaved: (String value) => state.bike.category = value,
+                          onSaved: (String value) => state.data.category = value,
                         ),
                       ),
                       SizedBox(width: 8),
                       Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            hasFloatingPlaceholder: true,
-                            labelText: 'frame size',
-                            border: InputBorder.none
-                          ),
-                          value: state.bike.frameSize ?? _frameSize,
-                          items: <String>['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
-                            .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          onChanged: (String value){
-                            setState(() => _frameSize = value);
-                            FocusScope.of(context).unfocus();
-                          },
-                          onSaved: (String value) => state.bike.frameSize = value,
+                        child: BikesTextField(
+                          initialValue: state.data.frameSize,
+                          label: 'frame size',
+                          maxLength: 5,
+                          onSaved: (String value) => state.data.frameSize = value,
                         ),
                       ),
                     ]
@@ -92,36 +81,32 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                       Expanded(
                         child: BikesTextField(
                           label: 'location',
-                          initialValue: state.bike.location,
-                          onSaved: (String value) => state.bike.location = value,
+                          initialValue: state.data.location,
+                          onSaved: (String value) => state.data.location = value,
                         ),
                       ),
                       SizedBox(width: 8),
                       Expanded(
                         child: BikesTextField(
                           label: 'price range',
-                          initialValue: state.bike.priceRange,
-                          onSaved: (String value) => state.bike.priceRange = value,
+                          initialValue: state.data.priceRange,
+                          onSaved: (String value) => state.data.priceRange = value,
                         ),
                       )
                     ]
                   ),
                   BikesTextField(
                     label: 'description',
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: () => _editBike(state.bike),
-                    initialValue: state.bike.description,
-                    onSaved: (String value) => state.bike.description = value,
+                    maxLength: 500,
+                    maxLines: 5,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    initialValue: state.data.description,
+                    onSaved: (String value) => state.data.description = value,
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 16),
-                    height: 60,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      elevation: 0,
-                      child: Text(widget.id == null ? 'Add bike' : 'Update Bike'),
-                      onPressed: () => _editBike(state.bike),
-                    )
+                  BikesButton(
+                    label: '${widget.id == null ? 'Add' : 'Update'} Bike',
+                    onPressed: () => _editBike(state.data),
                   )
                 ],
               ),
@@ -132,10 +117,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     );
   }
 
-  _editBike(bike){
+  void _editBike(Bike bike){
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Provider.of<BikesProvider>(context, listen: false).editBike(bike, widget.id);
+      widget.id == null
+      ? Provider.of<BikesProvider>(context, listen: false).addBike(bike)
+      : Provider.of<BikesProvider>(context, listen: false).editBike(bike, widget.id);
       Navigator.pop(context);
     }
   }

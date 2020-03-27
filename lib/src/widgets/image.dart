@@ -36,7 +36,7 @@ class BikesImage extends StatelessWidget {
     );
   }
 
-  _imagePlaceholder(){
+  Widget _imagePlaceholder(){
     return Container(
       height: height,
       width: width,

@@ -19,13 +19,13 @@ class Bike{
     this.description,
   });
 
-  Bike.fromJson(Map<String, dynamic> json)
-    : id = json['id'],
-      frameSize = json['frameSize'],
-      category = json['category'],
-      location = json['location'],
-      name = json['name'],
-      photoUrl = json['photoUrl'],
-      priceRange = json['priceRange'],
-      description = json['description'];
+  Bike.fromJson(dynamic json)
+    : id = json['id'] as int,
+      frameSize = json['frameSize'] as String,
+      category = json['category'] as String,
+      location = json['location'] as String,
+      name = json['name'] as String,
+      photoUrl = json['photoUrl'] as String,
+      priceRange = json['priceRange'] as String,
+      description = json['description'] as String;
 }

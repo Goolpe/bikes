@@ -1,6 +1,9 @@
 export 'badge.dart';
-export 'bike_card.dart';
+export 'button.dart';
+export 'card.dart';
 export 'image.dart';
+export 'list_tile.dart';
 export 'overscroll.dart';
+export 'rich_text.dart';
 export 'scaffold.dart';
 export 'textfield.dart';
