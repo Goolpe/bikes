@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 
 class BikesTextField extends StatelessWidget{
   const BikesTextField({
-    this.label = '',
+    @required this.label,
     this.maxLength = 30,
-    this.initialValue = '',
     this.textInputAction = TextInputAction.next,
+    this.keyboardType = TextInputType.text,
     this.maxLines = 1,
     this.focusNode,
     this.nextFocusNode,
     this.onFieldSubmitted,
     this.onSaved,
-    this.keyboardType = TextInputType.text,
-  });
+    this.initialValue,
+  }) : assert(label != null);
 
   final String label;
   final int maxLength;
@@ -32,7 +32,7 @@ class BikesTextField extends StatelessWidget{
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
-        initialValue: initialValue,
+        initialValue: initialValue ?? '',
         decoration: InputDecoration(
           labelText: label,
           counterText: '',

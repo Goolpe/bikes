@@ -43,7 +43,9 @@ class _BikeScreenState extends State<BikeScreen> {
                 type: BikesCardType.vertical,
                 onDelete: () => Navigator.pop(context),
               ),
-              Padding(
+              state.data.description.isEmpty
+              ? SizedBox()
+              : Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

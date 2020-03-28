@@ -21,11 +21,11 @@ class Bike{
 
   Bike.fromJson(dynamic json)
     : id = json['id'] as int,
-      frameSize = json['frameSize'] as String,
-      category = json['category'] as String,
-      location = json['location'] as String,
-      name = json['name'] as String,
-      photoUrl = json['photoUrl'] as String,
-      priceRange = json['priceRange'] as String,
-      description = json['description'] as String;
+      frameSize = json['frameSize'] as String ?? '',
+      category = json['category'] as String ?? '',
+      location = json['location'] as String ?? '',
+      name = json['name'] as String ?? '',
+      photoUrl = json['photoUrl'] as String ?? '',
+      priceRange = json['priceRange'] as String ?? '',
+      description = json['description'] as String ?? '';
 }

@@ -70,7 +70,7 @@ class BikesCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         BikesListTile(
-          title: data.name ?? '',
+          title: data.name,
           id: data.id,
           fontSize: fontSize,
           onDelete: onDelete
@@ -79,35 +79,40 @@ class BikesCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8),
           child:Row(
             children: <Widget>[
-              BikesRichText(
+              data.frameSize.isEmpty
+              ? SizedBox()
+              : BikesRichText(
                 label1: 'Frame Size: ',
-                label2: data.frameSize ?? '',
+                label2: data.frameSize,
               ),
-              showPrice
-              ? Padding(
-                padding: EdgeInsets.only(left: 24),
-                child: BikesRichText(
-                  label1: 'Price Range: ',
-                  label2: data.priceRange ?? '',
-                )
-              ) : SizedBox(),
+              !showPrice || data.priceRange.isEmpty
+                ? SizedBox()
+                : Padding(
+                  padding: EdgeInsets.only(left: 24),
+                  child: BikesRichText(
+                    label1: 'Price Range: ',
+                    label2: data.priceRange,
+                  )
+              ),
             ]
           )
         ),
         Row(
           children: <Widget>[
             Expanded(
-              child: data.category == null
+              child: data.category.isEmpty
               ? SizedBox()
               : BikesBadge(label: data.category)
             ),
             SizedBox(width: 16),
             Expanded(
-              child: Row(
+              child: data.location.isEmpty
+              ? SizedBox()
+              : Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: Text(data.location ?? '',
+                    child: Text(data.location,
                       textAlign: TextAlign.end,
                       overflow: TextOverflow.ellipsis
                     )

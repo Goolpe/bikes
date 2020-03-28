@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<BikesProvider>(
-          create: (_) => BikesProvider(context: context)..init()
+          create: (_) => BikesProvider()..init()
         ),
         ChangeNotifierProvider<BikeProvider>(
           create: (_) => BikeProvider()

@@ -6,6 +6,7 @@ class BikesScaffold extends StatelessWidget {
     this.body,
     this.backgroundColor
   });
+  
   final Widget body;
   final Color backgroundColor;
 

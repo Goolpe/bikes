@@ -5,11 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
 class BikesProvider extends ChangeNotifier{
-  BikesProvider({
-    @required this.context
-  }) : assert(context != null);
-
-  final BuildContext context;
 
   List<Bike> _dataList = [];
   List<Bike> get dataList => _dataList;
@@ -26,7 +21,7 @@ class BikesProvider extends ChangeNotifier{
 
     //fetch and decode json file
     try{
-      String _dataJson = await DefaultAssetBundle.of(context).loadString("assets/ISBikesData.json");
+      String _dataJson = await fetchJson();
       List<dynamic> _newDataList = json.decode(_dataJson) as List<dynamic>;
 
       //transfer json to bike model
@@ -47,7 +42,7 @@ class BikesProvider extends ChangeNotifier{
   }
 
   void addBike(Bike newData){
-    //create and add to list new id
+    //create id and add bike to list 
     newData.id = DateTime.now().millisecondsSinceEpoch;
     _dataList.add(newData);
     notifyListeners();
